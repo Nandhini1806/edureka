@@ -31,8 +31,7 @@ pipeline{
         stage('integration test'){
           agent{
             docker{
-              reuseNode false
-              image 'ubuntu'
+              docker pull ubuntu:14.04
             }
           }
           steps{
