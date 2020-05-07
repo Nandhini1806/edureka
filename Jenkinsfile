@@ -3,13 +3,44 @@ pipeline{
   stages{
     stage('one'){
       steps{
-        echo "Welcome Nandhini"
-        }
+      echo "executing first step"
       }  
-    stage ('two'){
+    }
+    stage('two'){
       steps{
-      echo "Bye!!"
+        input("Do you want to proceed?")
       }
-    }  
+    }
+    stage('three'){
+      when{
+        not{
+          branch "master"
+        }
+      }
+      steps{
+        echo "hello"
+      }
+    }
+    stage('four'){
+      parallel{
+        stage('Unit test'){
+          steps{
+            echo "unit test done"
+          }
+        }
+        stage('integration test'){
+          agent{
+            docker{
+              reuseNode false
+              image 'ubuntu'
+            }
+          }
+          steps{
+            echo "integration test done"
+          }
+        }
+      }
+    }
   }
 }
+      
