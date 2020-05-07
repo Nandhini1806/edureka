@@ -31,7 +31,7 @@ pipeline{
         stage('integration test'){
           agent{
             docker{
-              docker pull ubuntu:14.04
+              $ docker pull ubuntu
             }
           }
           steps{
